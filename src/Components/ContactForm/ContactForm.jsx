@@ -1,16 +1,23 @@
 import { useState } from "react";
-import { connect } from "react-redux";
-import { addContact } from "../../redux/actions/contacts";
+// import { connect } from "react-redux";
+// import { addContact } from "../../redux/actions/contacts";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
+import { addContact } from "../../redux/operations";
 import { Form } from "./ContactForm.styled";
 import { MdPersonAdd } from "react-icons/md";
 import Button from "../Utils/Button/Button";
 import Title from "../Utils/Title/Title";
 import Input from "../Utils/Input/Input";
 
-function ContactForm({ contacts, onSubmit }) {
+function ContactForm() {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+  const dispatch = useDispatch();
+  const contacts = useSelector(
+    (state) => state.contacts.contactsReducer.entities
+  );
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -47,7 +54,8 @@ function ContactForm({ contacts, onSubmit }) {
       return;
     }
 
-    onSubmit({ name, number });
+    // onSubmit({ name, number });
+    dispatch(addContact({ name, number }));
     setName("");
     setNumber("");
   };
@@ -86,15 +94,15 @@ function ContactForm({ contacts, onSubmit }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  contacts: state.contacts.items,
-});
+// const mapStateToProps = (state) => ({
+//   contacts: state.contacts.items,
+// });
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (data) => dispatch(addContact(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+// const mapDispatchToProps = (dispatch) => ({
+//   onSubmit: (data) => dispatch(addContact(data)),
+// });
+export default ContactForm;
+// export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
 
 ContactForm.propTypes = {
   contacts: PropTypes.arrayOf(
@@ -102,7 +110,6 @@ ContactForm.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       number: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
-  onSubmit: PropTypes.func.isRequired,
+    })
+  ),
 };

@@ -2,19 +2,26 @@
 // import { deleteContact } from "../../redux/actions/contacts";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchContacts } from "../../redux/operations";
-import ContactItem from "../ContactItem/ContactItem";
+import { fetchContacts, deleteContact } from "../../redux/operations";
 import PropTypes from "prop-types";
+
+import ContactItem from "../ContactItem/ContactItem";
 import Button from "../Utils/Button/Button";
 import { MdDeleteForever } from "react-icons/md";
 import { List, Item } from "./Contacts.styled";
 
 function ContactList() {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts.items.entities);
+  const contacts = useSelector(
+    (state) => state.contacts.contactsReducer.entities
+  );
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
+
+  const onDeleteContact = (id) => {
+    dispatch(deleteContact(id));
+  };
   return (
     <>
       <List>
@@ -25,7 +32,7 @@ function ContactList() {
               title="Remove from contacts"
               text={<MdDeleteForever color="#ff4f4f" size={30} />}
               type="button"
-              // onClick={() => onDeleteContact(contact.id)}
+              onClick={() => onDeleteContact(contact.id)}
             />
           </Item>
         ))}
@@ -40,8 +47,8 @@ ContactList.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       number: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+    })
+  ),
   onDeleteContact: PropTypes.func.isRequired,
 };
 

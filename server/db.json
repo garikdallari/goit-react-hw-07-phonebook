@@ -1,7 +1,14 @@
 {
-    "contacts": [
-        {"id": "id-1", "name": "Donald Trump", "number": "444-666-333"},
-        {"id": "id-2", "name": "Conor McGregor", "number": "111-666-9"},
-        {"id": "id-3", "name": "Dana White", "number": "7777-999-65"}
-    ]
+  "contacts": [
+    {
+      "id": "id-1",
+      "name": "Donald Trump",
+      "number": "444-666-333"
+    },
+    {
+      "id": "id-2",
+      "name": "Conor McGregor",
+      "number": "111-666-9"
+    }
+  ]
 }
