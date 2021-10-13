@@ -3,6 +3,6 @@ import contactsReducer from "./reducers/index";
 
 export default configureStore({
   reducer: {
-    contacts: contactsReducer,
+    contactsReducer,
   },
 });

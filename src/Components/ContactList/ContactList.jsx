@@ -1,5 +1,3 @@
-// import { connect } from "react-redux";
-// import { deleteContact } from "../../redux/actions/contacts";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts, deleteContact } from "../../redux/operations";
@@ -12,9 +10,15 @@ import { List, Item } from "./Contacts.styled";
 
 function ContactList() {
   const dispatch = useDispatch();
-  const contacts = useSelector(
-    (state) => state.contacts.contactsReducer.entities
+  const contactList = useSelector(
+    (state) => state.contactsReducer.contacts.entities
   );
+  const filterValue = useSelector((state) => state.contactsReducer.filter);
+
+  const contacts = contactList.filter((contact) =>
+    contact.name.toLowerCase().includes(filterValue.toLowerCase())
+  );
+
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
@@ -49,23 +53,7 @@ ContactList.propTypes = {
       number: PropTypes.string.isRequired,
     })
   ),
-  onDeleteContact: PropTypes.func.isRequired,
+  onDeleteContact: PropTypes.func,
 };
 
 export default ContactList;
-
-// const filterByName = (state) => {
-//   return state.contacts.items.entities.filter((contact) =>
-//     contact.name.toLowerCase().includes(state.contacts.filter.toLowerCase())
-//   );
-// };
-
-// const mapStateToProps = (state) => ({
-//   contacts: filterByName(state),
-// });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   onDeleteContact: (id) => dispatch(deleteContact(id)),
-// });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

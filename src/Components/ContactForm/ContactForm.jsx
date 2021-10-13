@@ -1,6 +1,4 @@
 import { useState } from "react";
-// import { connect } from "react-redux";
-// import { addContact } from "../../redux/actions/contacts";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { addContact } from "../../redux/operations";
@@ -15,7 +13,7 @@ function ContactForm() {
   const [number, setNumber] = useState("");
   const dispatch = useDispatch();
   const contacts = useSelector(
-    (state) => state.contacts.contactsReducer.entities
+    (state) => state.contactsReducer.contacts.entities
   );
 
   const handleChange = (e) => {
@@ -54,7 +52,6 @@ function ContactForm() {
       return;
     }
 
-    // onSubmit({ name, number });
     dispatch(addContact({ name, number }));
     setName("");
     setNumber("");
@@ -94,15 +91,7 @@ function ContactForm() {
   );
 }
 
-// const mapStateToProps = (state) => ({
-//   contacts: state.contacts.items,
-// });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   onSubmit: (data) => dispatch(addContact(data)),
-// });
 export default ContactForm;
-// export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
 
 ContactForm.propTypes = {
   contacts: PropTypes.arrayOf(
