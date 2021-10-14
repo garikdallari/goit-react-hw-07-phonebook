@@ -5,10 +5,10 @@ import {
 } from "../../redux/Contacts/contactsSlice";
 import PropTypes from "prop-types";
 import { Form } from "./ContactForm.styled";
-import { MdPersonAdd } from "react-icons/md";
 import Button from "../Utils/Button/Button";
 import Title from "../Utils/Title/Title";
 import Input from "../Utils/Input/Input";
+import { MdPersonAdd } from "react-icons/md";
 
 function ContactForm() {
   const [name, setName] = useState("");
