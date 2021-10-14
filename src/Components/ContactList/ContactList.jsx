@@ -3,6 +3,7 @@ import {
   useFetchContactsQuery,
   useDeleteContactMutation,
 } from "../../redux/Contacts/contactsSlice";
+import { getFilter } from "../../Selectors/contacts-selectors";
 import PropTypes from "prop-types";
 
 import ContactItem from "../ContactItem/ContactItem";
@@ -13,7 +14,7 @@ import { List, Item } from "./Contacts.styled";
 function ContactList() {
   const { data: contactList } = useFetchContactsQuery();
   const [deleteContact] = useDeleteContactMutation();
-  const filterValue = useSelector((state) => state.filter);
+  const filterValue = useSelector((state) => getFilter(state));
   const contacts = contactList?.filter((contact) =>
     contact.name.toLowerCase().includes(filterValue.toLowerCase())
   );
