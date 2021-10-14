@@ -1,29 +1,19 @@
 {
   "contacts": [
     {
-      "id": "id-1",
-      "name": "Donald Trump",
-      "number": "444-666-333"
-    },
-    {
-      "id": "id-2",
-      "name": "Conor McGregor",
-      "number": "111-666-9"
-    },
-    {
-      "id": "id-3",
-      "name": "Dana White",
-      "number": "7777-999-65"
-    },
-    {
       "name": "Leonora Shabanian",
       "number": "86248400004",
-      "id": "6SWA7aV"
+      "id": 1
+    },
+    {
+      "name": "rosie simpson",
+      "number": "65756756",
+      "id": 2
     },
     {
       "name": "eko-nams",
-      "number": "662626",
-      "id": "zjGXlDk"
+      "number": "65756756",
+      "id": 3
     }
   ]
 }

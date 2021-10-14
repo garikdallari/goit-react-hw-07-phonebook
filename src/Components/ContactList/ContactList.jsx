@@ -1,6 +1,8 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchContacts, deleteContact } from "../../redux/operations";
+import { useSelector } from "react-redux";
+import {
+  useFetchContactsQuery,
+  useDeleteContactMutation,
+} from "../../redux/Contacts/contactsSlice";
 import PropTypes from "prop-types";
 
 import ContactItem from "../ContactItem/ContactItem";
@@ -9,37 +11,28 @@ import { MdDeleteForever } from "react-icons/md";
 import { List, Item } from "./Contacts.styled";
 
 function ContactList() {
-  const dispatch = useDispatch();
-  const contactList = useSelector(
-    (state) => state.contactsReducer.contacts.entities
-  );
-  const filterValue = useSelector((state) => state.contactsReducer.filter);
-
-  const contacts = contactList.filter((contact) =>
+  const { data: contactList } = useFetchContactsQuery();
+  const [deleteContact] = useDeleteContactMutation();
+  const filterValue = useSelector((state) => state.filter);
+  const contacts = contactList?.filter((contact) =>
     contact.name.toLowerCase().includes(filterValue.toLowerCase())
   );
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
-  const onDeleteContact = (id) => {
-    dispatch(deleteContact(id));
-  };
   return (
     <>
       <List>
-        {contacts.map((contact) => (
-          <Item key={contact.id}>
-            <ContactItem contact={contact} />
-            <Button
-              title="Remove from contacts"
-              text={<MdDeleteForever color="#ff4f4f" size={30} />}
-              type="button"
-              onClick={() => onDeleteContact(contact.id)}
-            />
-          </Item>
-        ))}
+        {contactList &&
+          contacts.map((contact) => (
+            <Item key={contact.id}>
+              <ContactItem contact={contact} />
+              <Button
+                title="Remove from contacts"
+                text={<MdDeleteForever color="#ff4f4f" size={30} />}
+                type="button"
+                onClick={() => deleteContact(contact.id)}
+              />
+            </Item>
+          ))}
       </List>
     </>
   );

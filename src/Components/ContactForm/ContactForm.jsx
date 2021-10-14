@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  useCreateContactMutation,
+  useFetchContactsQuery,
+} from "../../redux/Contacts/contactsSlice";
 import PropTypes from "prop-types";
-import { addContact } from "../../redux/operations";
 import { Form } from "./ContactForm.styled";
 import { MdPersonAdd } from "react-icons/md";
 import Button from "../Utils/Button/Button";
@@ -11,10 +13,8 @@ import Input from "../Utils/Input/Input";
 function ContactForm() {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
-  const dispatch = useDispatch();
-  const contacts = useSelector(
-    (state) => state.contactsReducer.contacts.entities
-  );
+  const [createContact] = useCreateContactMutation();
+  const { data: contacts } = useFetchContactsQuery();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,7 +52,7 @@ function ContactForm() {
       return;
     }
 
-    dispatch(addContact({ name, number }));
+    createContact({ name, number });
     setName("");
     setNumber("");
   };
@@ -96,7 +96,7 @@ export default ContactForm;
 ContactForm.propTypes = {
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       number: PropTypes.string.isRequired,
     })
